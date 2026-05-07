@@ -3,7 +3,7 @@ using UnityEngine;
 public class GameController : MonoBehaviour
 {
     //make a scriptable object for this data....
-    int availableTravel = 35;
+    public int availableTravel = 35;
 
     [Header("UI")]
     public GameObject travelTMP;

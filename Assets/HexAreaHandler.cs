@@ -16,8 +16,10 @@ public class HexAreaHandler : MonoBehaviour
 
     public Dictionary<Vector2Int, GameObject> spawnedHexes = new Dictionary<Vector2Int, GameObject>();
     private List<Vector2Int> availableSpots = new List<Vector2Int>();
-    public Vector2Int destinationCoord;
+    public List<Vector2Int> specialPoints = new List<Vector2Int>();
+    public Dictionary<Vector2Int, string> specialPointRoles = new Dictionary<Vector2Int, string>();
 
+    //start is a temporary thing until i get the larger loop working, so bug should get fixed
     void Start()
     {
         GenerateNextArea(Vector2Int.zero);
@@ -28,6 +30,9 @@ public class HexAreaHandler : MonoBehaviour
     {
         // 1. Clear everything EXCEPT the current hex the player is standing on
         ClearOldGrid(startPoint);
+
+        specialPoints.Clear();
+        specialPointRoles.Clear();
 
         // 2. Run your existing clump logic starting from the new 'startPoint'
         UpdateAvailableSpots(startPoint);
@@ -42,28 +47,66 @@ public class HexAreaHandler : MonoBehaviour
             availableSpots.RemoveAt(randomIndex);
             UpdateAvailableSpots(nextCoord);
         }
+       
+        specialPoints.Clear();
 
-        // 3. NEW: After clumping, find the best destination
-        SetDestination(startPoint);
+        specialPoints.Add(startPoint);
+
+        // 1. Set the main goal (Grey, very far)
+        PlaceSpecialPoint(startPoint, Color.grey, "DESTINATION", 5f);
+
+        PlaceSpecialPoint(startPoint, Color.grey, "DESTINATION", 7f);
+
+        // 2. Add a "Red Stop" (Must be at least 3 units away from the Destination)
+        PlaceSpecialPoint(startPoint, Color.red, "RED_STOP", 0.3f);
+
+        // 3. Add a "Blue Stop" (Must be at least 3 units away from everything else)
+        PlaceSpecialPoint(startPoint, Color.blue, "BLUE_STOP", 0.3f);
     }
 
-    void SetDestination(Vector2Int origin)
+    void PlaceSpecialPoint(Vector2Int origin, Color pointColor, string label, float preferredDist, float minDistanceFromOthers = 3f)
     {
-        // Find the hex furthest away from where we started
-        float maxDist = -1;
+        Vector2Int bestCoord = origin;
+        // We start with a huge "difference" so any valid hex will be smaller/better
+        float lowestDiff = float.MaxValue; 
+        bool foundValidSpot = false;
+
         foreach (var coord in spawnedHexes.Keys)
         {
-            float dist = Vector2Int.Distance(origin, coord);
-            if (dist > maxDist)
+            float distFromOrigin = Vector2Int.Distance(origin, coord);
+            
+            // 1. Check if it's too close to existing points
+            bool tooClose = false;
+            foreach (var existing in specialPoints)
             {
-                maxDist = dist;
-                destinationCoord = coord;
+                if (Vector2Int.Distance(coord, existing) < minDistanceFromOthers)
+                {
+                    tooClose = true;
+                    break;
+                }
+            }
+            if (tooClose) continue;
+
+            // 2. Scoring Logic: How close is this hex to our PREFERRED distance?
+            // Math.Abs gives us the difference. Smallest difference wins.
+            float diff = Mathf.Abs(distFromOrigin - preferredDist);
+
+            if (diff < lowestDiff)
+            {
+                lowestDiff = diff;
+                bestCoord = coord;
+                foundValidSpot = true;
             }
         }
 
-        // Visual feedback: Make the destination hex stand out
-        spawnedHexes[destinationCoord].GetComponentInChildren<Renderer>().material.color = Color.grey;
-        spawnedHexes[destinationCoord].name = "DESTINATION";
+        if (foundValidSpot)
+        {            
+            specialPoints.Add(bestCoord); // Still keep the list for distance checks
+            specialPointRoles.Add(bestCoord, label); // Save the name/role
+            GameObject hex = spawnedHexes[bestCoord];
+            hex.GetComponentInChildren<Renderer>().material.color = pointColor;
+            hex.name = label;
+        }
     }
 
     void UpdateAvailableSpots(Vector2Int center)

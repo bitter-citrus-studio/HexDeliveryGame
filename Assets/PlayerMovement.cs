@@ -115,11 +115,30 @@ public class PlayerMovement : MonoBehaviour
         currentGridPos = targetCoord;
         isMoving = false; 
 
-        if (targetCoord == gridRef.destinationCoord)
+        if (gridRef.specialPointRoles.TryGetValue(targetCoord, out string role))
         {
-            Debug.Log("Arrival! Spawning next area...");
-            gridRef.GenerateNextArea(targetCoord);
-        }       
+            if (role == "DESTINATION")
+            {
+                // Change the name so it can't be triggered again immediately
+                gridRef.specialPointRoles[targetCoord] = "USED_DESTINATION";
+
+                if (gridRef.spawnedHexes.TryGetValue(targetCoord, out GameObject hexObj))
+                {
+                    hexObj.name = "USED_DESTINATION";
+                    // Optional: Change color back to white or a "neutral" color
+                    // hexObj.GetComponentInChildren<Renderer>().material.color = Color.white;
+                }
+
+
+                Debug.Log("Arrival! Spawning next area...");
+                gridRef.GenerateNextArea(targetCoord);
+            }
+            else 
+            {
+                Debug.Log($"Visited a special stop: {role}");
+                // You can use the 'role' string to decide what happens (RED_STOP, BLUE_STOP, etc.)
+            }
+        }
         UpdateMoveTargets();
     }
 
