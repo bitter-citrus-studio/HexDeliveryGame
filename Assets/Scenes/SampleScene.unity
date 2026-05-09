@@ -2955,8 +2955,6 @@ MonoBehaviour:
   ui_Contract: {fileID: 8341816173964340586, guid: 4df6f23fa745ec24689fa7024a82d5f4, type: 3}
   possibleContractTypes:
   - {fileID: 11400000, guid: 5778437281bb34449b6f07bfc72899a7, type: 2}
-  - {fileID: 11400000, guid: 720f91168924f004c8e363a061005c6d, type: 2}
-  - {fileID: 11400000, guid: 3c8616cb1f58e5d49ac9200b7620cba9, type: 2}
   travelTMP: {fileID: 238292225}
 --- !u!1 &1245258409
 GameObject:

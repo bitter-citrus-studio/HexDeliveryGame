@@ -9,11 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 075eee130e735e44398fd440e58aac7e, type: 3}
-  m_Name: Easy
+  m_Script: {fileID: 11500000, guid: 0149edfa74ce74e48a1e167cd2cd185d, type: 3}
+  m_Name: Blue
   m_EditorClassIdentifier: 
-  difficulty: 0
-  totalQuantityRange: {x: 1, y: 3}
-  totalDestinationsRange: {x: 1, y: 1}
-  rewardRange: {x: 5, y: 10}
-  pickupLocationsRange: {x: 1, y: 1}
+  tokenName: Blue
+  tokenColour: {r: 0, g: 0, b: 1, a: 1}
+  tokenPrefab: {fileID: 0}
