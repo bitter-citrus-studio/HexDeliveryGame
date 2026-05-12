@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 public class HexAreaHandler : MonoBehaviour
 {
+    [Header("Type")]
+    [SerializeField] private ContractType currentContractType;
+    
     public GameObject hexPrefab;
     public GameObject playerPrefab;
 
@@ -22,8 +25,13 @@ public class HexAreaHandler : MonoBehaviour
     //start is a temporary thing until i get the larger loop working, so bug should get fixed
     void Start()
     {
+        // GenerateNextArea(Vector2Int.zero);
+        // SpawnPlayer(Vector2Int.zero);
+    }
+
+    public void CreateRound()
+    {
         GenerateNextArea(Vector2Int.zero);
-        SpawnPlayer(Vector2Int.zero);
     }
 
     public void GenerateNextArea(Vector2Int startPoint)
@@ -174,5 +182,10 @@ public class HexAreaHandler : MonoBehaviour
             Vector3 spawnPos = new Vector3(hexPos.x, hexPos.y + 0.5f, hexPos.z);
             Instantiate(playerPrefab, spawnPos, Quaternion.identity);
         }
+    }
+
+    public void SetContractType(ContractType cT)
+    {
+        currentContractType = cT;
     }
 }

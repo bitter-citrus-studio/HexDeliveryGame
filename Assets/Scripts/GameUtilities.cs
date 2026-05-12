@@ -17,4 +17,9 @@ public static class GameUtility
             Debug.LogWarning($"No TextMeshPro found on {uiObj.name}");
         }
     }
+
+    public static int GetRandomValue(int min, int max)
+    {
+        return Random.Range(min, max);
+    }
 }
