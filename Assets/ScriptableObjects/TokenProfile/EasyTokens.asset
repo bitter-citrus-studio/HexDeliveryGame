@@ -14,4 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tokenProfileName: New Token Profile
   tokens:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: e0e9c6f7023835545a2da5b391cd5446, type: 2}
+  - {fileID: 11400000, guid: 7849bb9db893e8c4d9f1ee5a7390d5be, type: 2}
+  - {fileID: 11400000, guid: b6f51c3e61391704bbe658b2c63c7625, type: 2}
+  - {fileID: 11400000, guid: 76b83568e0d7ad74588df241f080013b, type: 2}

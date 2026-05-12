@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0149edfa74ce74e48a1e167cd2cd185d, type: 3}
   m_Name: Red
   m_EditorClassIdentifier: 
-  tokenName: 
-  tokenColour: {r: 1, g: 1, b: 1, a: 1}
+  tokenName: Red
+  tokenColour: {r: 1, g: 0, b: 0, a: 1}
   tokenPrefab: {fileID: 0}
