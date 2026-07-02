@@ -38,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if (isMoving) return;
+        if (isMoving || gc.GetPaused()) return;
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -51,7 +51,7 @@ public class PlayerMovement : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
-            if (hit.collider.CompareTag("Hex"))
+            if (hit.collider.CompareTag("Hex") || hit.collider.CompareTag("Dest"))
             {
                 Vector2Int clickedCoord = GetCoordFromHex(hit.collider.gameObject);
 

@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 3
   tags:
   - Hex
+  - Dest
+  - DestUI
+  - DeliverUI
+  - PlayerTargets
   layers:
   - Default
   - TransparentFX
@@ -12,8 +16,8 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
+  - Hex
+  - Player
   - 
   - 
   - 
